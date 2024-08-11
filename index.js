@@ -3,6 +3,10 @@ const express = require('express')
 const app = express()
 //morgan
 const morgan = require('morgan')
+//cors
+const cors = require('cors')
+
+app.use(cors())
 
 //list of persons
 let persons = [
@@ -60,10 +64,14 @@ app.get('/api/persons/:id', (request, response) => {
 //delete
   app.delete('/api/persons/:id', (request, response) => {
     const id = request.params.id
+    const personToDelete = persons.find(person => person.id === id)//added for 3.9
     persons = persons.filter(person => person.id !== id)
   
-    response.status(204).end()
+    //response.status(204).end()-commented as part of 3.9
+    //added below code for 3.9
+    response.status(200).json(personToDelete)
   })  
+
 
   const generateId = () => {
     const maxId = persons.length > 0
@@ -74,6 +82,7 @@ app.get('/api/persons/:id', (request, response) => {
 
 //create
 app.post('/api/persons', (request, response) => {
+  console.log(request.body)
   const body = request.body
 
 //error handling
@@ -99,8 +108,9 @@ app.post('/api/persons', (request, response) => {
   }
 
   persons = persons.concat(person)
-
-  response.json(persons)
+  console.log(persons)
+  //send only the new person
+  response.json(person)
 })
 
 //run on port

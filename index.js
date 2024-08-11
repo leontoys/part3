@@ -7,6 +7,8 @@ const morgan = require('morgan')
 const cors = require('cors')
 
 app.use(cors())
+//adding dist
+app.use(express.static('dist'))
 
 //list of persons
 let persons = [

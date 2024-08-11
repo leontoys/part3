@@ -1,21 +1,23 @@
+#@baseUrl = http://localhost:3001
+@baseUrl = https://part3-caiv.onrender.com
 ###Get all persons
-GET http://localhost:3001/api/persons/
+GET {{baseUrl}}/api/persons/
 
 
 
-@id = 6
+@id = 4
 ###Get a specific person
-GET http://localhost:3001/api/persons/{{id}}
+GET {{baseUrl}}/api/persons/{{id}}
 
 
 
 ###Delete a specific person
-DELETE http://localhost:3001/api/persons/{{id}}
+DELETE {{baseUrl}}/api/persons/{{id}}
 
 
 
 ###Create a new person
-POST http://localhost:3001/api/persons
+POST {{baseUrl}}/api/persons
 Content-Type: application/json
 
 {
@@ -26,7 +28,7 @@ Content-Type: application/json
 
 
 ###Create a new person
-POST http://localhost:3001/api/persons
+POST {{baseUrl}}/api/persons
 Content-Type: application/json
 
 {
@@ -35,7 +37,7 @@ Content-Type: application/json
 
 
 ###Create a new person
-POST http://localhost:3001/api/persons
+POST {{baseUrl}}/api/persons
 Content-Type: application/json
 
 {

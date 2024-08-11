@@ -1,0 +1,20 @@
+###Get all persons
+GET http://localhost:3001/api/persons/
+
+
+
+@id = 1
+###Get a specific person
+GET http://localhost:3001/api/persons/{{id}}
+
+
+
+###Delete a specific person
+DELETE http://localhost:3001/api/persons/3
+
+
+
+###Create a new person
+
+
+

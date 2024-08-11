@@ -1,6 +1,8 @@
 //create express app
 const express = require('express')
 const app = express()
+//morgan
+const morgan = require('morgan')
 
 //list of persons
 let persons = [
@@ -28,6 +30,7 @@ let persons = [
 
 //middleware for parsing json request
 app.use(express.json())
+app.use(morgan('tiny'))
 
 //to get all persons
 app.get('/api/persons', (request, response) => {

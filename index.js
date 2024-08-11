@@ -5,6 +5,13 @@ const app = express()
 const morgan = require('morgan')
 //cors
 const cors = require('cors')
+require('dotenv').config()
+//Mongo
+const mongoose = require('mongoose')
+
+const password = process.argv[2]
+//import Person
+const Person = require('./models/person')
 
 app.use(cors())
 //adding dist
@@ -40,10 +47,16 @@ app.use(express.json())
 morgan.token('custom', (req,res) => JSON.stringify(req.body) )
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :custom'))
 
-//to get all persons
-app.get('/api/persons', (request, response) => {
+//to get all persons - commented as part of 3.13
+/* app.get('/api/persons', (request, response) => {
   response.json(persons)
-})
+}) */
+//3.13++
+  app.get('/api/persons', (request, response) => {
+    Person.find({}).then(persons => {
+      response.json(persons)
+    })
+  })
 
 //to get info 
 app.get('/info', (request, response) => {
@@ -51,6 +64,7 @@ app.get('/info', (request, response) => {
     response.send(`<p>Phonebook has info for ${persons.length} people</p>
                    <p>${requestedTime}</p>`)
   })
+  
 
 //get specific person for id
 app.get('/api/persons/:id', (request, response) => {
@@ -114,6 +128,7 @@ app.post('/api/persons', (request, response) => {
   //send only the new person
   response.json(person)
 })
+
 
 //run on port
 const PORT = process.env.PORT || 3001

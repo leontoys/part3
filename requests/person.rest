@@ -3,18 +3,35 @@ GET http://localhost:3001/api/persons/
 
 
 
-@id = 1
+@id = 6
 ###Get a specific person
 GET http://localhost:3001/api/persons/{{id}}
 
 
 
 ###Delete a specific person
-DELETE http://localhost:3001/api/persons/3
+DELETE http://localhost:3001/api/persons/{{id}}
 
 
 
 ###Create a new person
+POST http://localhost:3001/api/persons
+Content-Type: application/json
 
+{
+  "name": "Alan Turing",
+  "number": "123-456-789"
+}
+
+
+
+###Create a new person
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Charles Babbage",
+  "number": "123-123-123"
+}
 
 

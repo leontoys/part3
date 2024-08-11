@@ -30,7 +30,9 @@ let persons = [
 
 //middleware for parsing json request
 app.use(express.json())
-app.use(morgan('tiny'))
+//app.use(morgan('tiny'))
+morgan.token('custom', (req,res) => JSON.stringify(req.body) )
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :custom'))
 
 //to get all persons
 app.get('/api/persons', (request, response) => {
@@ -73,7 +75,6 @@ app.get('/api/persons/:id', (request, response) => {
 //create
 app.post('/api/persons', (request, response) => {
   const body = request.body
-  console.log(body)
 
 //error handling
   if(!body.name){

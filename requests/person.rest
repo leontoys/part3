@@ -1,11 +1,11 @@
-#@baseUrl = http://localhost:3001
-@baseUrl = https://part3-caiv.onrender.com
+@baseUrl = http://localhost:3001
+#@baseUrl = https://part3-caiv.onrender.com
 ###Get all persons
 GET {{baseUrl}}/api/persons/
 
 
 
-@id = 4
+@id = 66b93c189e633353fb858cda
 ###Get a specific person
 GET {{baseUrl}}/api/persons/{{id}}
 

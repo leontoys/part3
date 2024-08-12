@@ -5,7 +5,7 @@ GET {{baseUrl}}/api/persons/
 
 
 
-@id = 66b93c189e633353fb858cda
+@id = 66b95510911217db441c4226
 ###Get a specific person
 GET {{baseUrl}}/api/persons/{{id}}
 
@@ -42,6 +42,16 @@ Content-Type: application/json
 
 {
   "name": "Charles Babbage"
+}
+
+
+
+###Update
+PUT {{baseUrl}}/api/{{id}}
+Content-Type: application/json
+
+{
+    "number": "3333",
 }
 
 

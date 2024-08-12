@@ -55,21 +55,25 @@ app.get('/', (request, response) => {
 //to get info 
 app.get('/info', (request, response) => {
     const requestedTime = new Date()
-    response.send(`<p>Phonebook has info for ${persons.length} people</p>
-                   <p>${requestedTime}</p>`)
+    Person.find({}).then(persons => {
+      response.send(`<p>Phonebook has info for ${persons.length} people</p>
+        <p>${requestedTime}</p>`)
+    })     
   })
-  
-
+ 
+ 
 //get specific person for id
-app.get('/api/persons/:id', (request, response) => {
-    const id = request.params.id
-    const person = persons.find(person => person.id === id)
-    if (person) {
-      response.json(person)
-    } else {
-      response.status(404).end()
-    }
-  }) 
+  app.get('/api/persons/:id', (request, response, next) => {
+    Person.findById(request.params.id)
+      .then(person => {
+        if (person) {
+          response.json(person)
+        } else {
+          response.status(404).end()
+        }
+      })
+      .catch(error => next(error))
+  })  
 
 //delete
   app.delete('/api/persons/:id', (request, response, next) => {
@@ -111,6 +115,23 @@ const person = new Person({
     })
   })
 
+
+//update
+app.put('/api/persons/:id', (request, response, next) => {
+  const body = request.body
+
+  //no need to create new person 
+  const person = {
+    name: body.name,
+    number: body.number,
+  }
+
+  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    .then(updatedPerson => {
+      response.json(updatedPerson)
+    })
+    .catch(error => next(error))
+})
 
   app.use(unknownEndpoint)
   app.use(errorHandler)

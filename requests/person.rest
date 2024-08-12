@@ -41,7 +41,8 @@ POST {{baseUrl}}/api/persons
 Content-Type: application/json
 
 {
-  "name": "Charles Babbage"
+  "name": "C",
+  "number" : "22"
 }
 
 

@@ -19,7 +19,7 @@ app.use(express.static('dist'))
 
 //list of persons
 let persons = [
-    { 
+/*     { 
       "id": "1",
       "name": "Arto Hellas", 
       "number": "040-123456"
@@ -38,7 +38,7 @@ let persons = [
       "id": "4",
       "name": "Mary Poppendieck", 
       "number": "39-23-6423122"
-    }
+    } */
 ]
 
 //middleware for parsing json request
@@ -89,15 +89,15 @@ app.get('/api/persons/:id', (request, response) => {
   })  
 
 
-  const generateId = () => {
+/*   const generateId = () => {
     const maxId = persons.length > 0
     ? Math.max(...persons.map(n => n.id))
       : 0
     return String(maxId + 1)
-  }  
+  }   */
 
 //create
-app.post('/api/persons', (request, response) => {
+/* app.post('/api/persons', (request, response) => {
   console.log(request.body)
   const body = request.body
 
@@ -127,7 +127,35 @@ app.post('/api/persons', (request, response) => {
   console.log(persons)
   //send only the new person
   response.json(person)
+}) */
+  app.post('/api/persons', (request, response) => {
+    const body = request.body
+  
+//error handling
+if(!body.name){
+  return response.status(400).json({ 
+    error: 'name missing' 
+  })
+}
+else if(!body.number){
+  return response.status(400).json({ 
+    error: 'number missing' 
+  })
+} else if(persons.find(person => person.name === body.name)) {
+  return response.status(400).json({ 
+    error: 'name must be unique' 
+  })
+}
+  
+const person = new Person({
+  name: body.name,
+  number: body.number,
 })
+  
+    person.save().then(savedPerson => {
+      response.json(savedPerson)
+    })
+  })
 
 
 //run on port

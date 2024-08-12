@@ -15,7 +15,7 @@ const number = process.argv[4]
 //url to connect to mongodb
 const url =
   `mongodb+srv://fullstack:${password}@cluster0.qo7uf0n.mongodb.net/personApp?retryWrites=true&w=majority`
-  
+
 mongoose.set('strictQuery',false)
 
 //connect
@@ -30,29 +30,29 @@ const personSchema = new mongoose.Schema({
 //create a model with that structure
 const Person = mongoose.model('Person', personSchema)
 
-//create new persson if name or number is given 
+//create new persson if name or number is given
 if(name || number){
 //create a new instance of the model with values
-const person = new Person({
-  name: name,
-  number: number
-})
+  const person = new Person({
+    name: name,
+    number: number
+  } )
 
-//save the new record with the instance method - save
-person.save().then(result => {
+  //save the new record with the instance method - save
+  person.save().then(result => {
   //console.log(result)
-  console.log(`added ${result.name} number ${result.number} to phonebook`)
-  mongoose.connection.close()
-}) 
+    console.log(`added ${result.name} number ${result.number} to phonebook`)
+    mongoose.connection.close()
+  } )
 }
 
 //if only password is given, then get the records from db
 else{
-    Person.find({}).then(result => {
-        console.log('phonebook:')
-        result.forEach(person => {
-          console.log(`${person.name} ${person.number}`)
-        })
-        mongoose.connection.close()
-      })
+  Person.find({}).then(result => {
+    console.log('phonebook:')
+    result.forEach(person => {
+      console.log(`${person.name} ${person.number}`)
+    })
+    mongoose.connection.close()
+  })
 }
